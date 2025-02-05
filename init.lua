@@ -102,7 +102,14 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
+
+-- Function to toggle relative number
+local toggle_relative_number = function()
+  vim.opt.relativenumber = not (vim.opt.relativenumber:get())
+end
+
+vim.keymap.set('n', '<leader>trn', toggle_relative_number, { silent = true, desc = 'Toggle Relative Line Numbers' })
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
