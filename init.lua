@@ -1094,6 +1094,17 @@ do
 end
 
 -- ============================================================
+-- SECTION: SURROUND
+-- nvim-surround setup
+-- ============================================================
+do
+  vim.pack.add { gh 'kylechui/nvim-surround' }
+  require('nvim-surround').setup {
+    -- Configuration here, or leave empty to use defaults
+  }
+end
+
+-- ============================================================
 -- SECTION 10: OPTIONAL EXAMPLES / NEXT STEPS
 -- kickstart.plugins.* examples
 -- ============================================================
