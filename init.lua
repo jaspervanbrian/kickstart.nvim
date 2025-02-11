@@ -444,6 +444,7 @@ require('lazy').setup({
             '--glob=!**/.idea/*',
             '--glob=!**/.vscode/*',
             '--glob=!**/node_modules/*',
+            '--glob=!**/log/*',
             '--glob=!**/build/*',
             '--glob=!**/dist/*',
             '--glob=!**/yarn.lock',
@@ -463,6 +464,7 @@ require('lazy').setup({
               '--glob=!**/.idea/*',
               '--glob=!**/.vscode/*',
               '--glob=!**/node_modules/*',
+              '--glob=!**/log/*',
               '--glob=!**/build/*',
               '--glob=!**/dist/*',
               '--glob=!**/yarn.lock',
@@ -1064,6 +1066,18 @@ require('lazy').setup({
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  },
+
+  -- nvim-surround
+  {
+    'kylechui/nvim-surround',
+    version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
