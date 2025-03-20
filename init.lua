@@ -552,7 +552,13 @@ require('lazy').setup({
         -- builtin.live_grep {
         --   additional_args = { '-u' },
         -- }
-      end, { desc = '[S]earch by [G]rep' })
+      end, { desc = '[S]earch by Fuzzy [G]rep' })
+
+      vim.keymap.set('n', '<leader>sz', function()
+        builtin.live_grep {
+          additional_args = { '-u' },
+        }
+      end, { desc = '[S]earch by Non-Fuzzy Grep [Z]' })
 
       vim.keymap.set('n', '<leader>s/', function()
         builtin.live_grep {
