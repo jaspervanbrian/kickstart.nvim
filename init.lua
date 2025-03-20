@@ -104,13 +104,6 @@ vim.o.number = true
 --  Experiment for yourself to see if you like it!
 vim.o.relativenumber = true
 
--- Function to toggle relative number
-local toggle_relative_number = function()
-  vim.o.relativenumber = not (vim.o.relativenumber:get())
-end
-
-vim.keymap.set('n', '<leader>trn', toggle_relative_number, { silent = true, desc = 'Toggle Relative Line Numbers' })
-
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
 
@@ -173,12 +166,23 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+-- Function to toggle relative number
+local toggle_relative_number = function()
+  vim.o.relativenumber = not (vim.o.relativenumber:get())
+end
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Toggle Relative Numbers
+vim.keymap.set('n', '<leader>tr', toggle_relative_number, { silent = true, desc = 'Toggle Relative Line Numbers' })
+
+-- Map <Leader>bd to :bd (delete buffer)
+vim.keymap.set('n', '<Leader>bd', ':bd<CR>', { noremap = true, silent = true, desc = 'Close Current Buffer' })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -353,6 +357,7 @@ require('lazy').setup({
       spec = {
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = '[T]oggle' },
+        { '<leader>b', group = '[B]uffers' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
@@ -428,6 +433,12 @@ require('lazy').setup({
           },
         },
         defaults = {
+          layout_strategy = 'vertical',
+          mappings = {
+            i = {
+              ['<c-space>'] = 'to_fuzzy_refine',
+            },
+          },
           -- configure to use ripgrep
           vimgrep_arguments = {
             'rg',
@@ -473,6 +484,29 @@ require('lazy').setup({
           },
         },
       }
+      -- Function to toggle Telescope layout
+      local toggle_telescope_layout = function()
+        local current_layout = require('telescope.config').values.layout_strategy
+
+        if current_layout == 'horizontal' then
+          require('telescope').setup {
+            defaults = {
+              layout_strategy = 'vertical',
+            },
+          }
+          print 'Telescope layout: Vertical'
+        else
+          require('telescope').setup {
+            defaults = {
+              layout_strategy = 'horizontal',
+            },
+          }
+          print 'Telescope layout: Horizontal'
+        end
+      end
+
+      -- Keybinding to toggle Telescope layout
+      vim.keymap.set('n', '<Leader>tl', toggle_telescope_layout, { noremap = true, silent = true, desc = 'Toggle Telescope Layout' })
 
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
@@ -506,9 +540,15 @@ require('lazy').setup({
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
       vim.keymap.set('n', '<leader>sg', function()
-        builtin.live_grep {
-          additional_args = { '-u' },
+        builtin.grep_string {
+          shorten_path = true,
+          word_match = '-w',
+          only_sort_text = true,
+          search = '',
         }
+        -- builtin.live_grep {
+        --   additional_args = { '-u' },
+        -- }
       end, { desc = '[S]earch by [G]rep' })
 
       vim.keymap.set('n', '<leader>s/', function()
