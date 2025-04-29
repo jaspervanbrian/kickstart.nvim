@@ -187,6 +187,9 @@ vim.keymap.set('n', '<leader>tr', toggle_relative_number, { silent = true, desc 
 -- Map <Leader>bd to :bd (delete buffer)
 vim.keymap.set('n', '<Leader>bd', ':bd<CR>', { noremap = true, silent = true, desc = 'Close Current Buffer' })
 
+-- Open Oil
+vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -1127,6 +1130,19 @@ require('lazy').setup({
         -- Configuration here, or leave empty to use defaults
       }
     end,
+  },
+
+  -- oil.nvim
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
