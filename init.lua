@@ -199,6 +199,9 @@ do
   -- Map <Leader>bd to :bd (delete buffer)
   vim.keymap.set('n', '<Leader>bd', ':bd<CR>', { noremap = true, silent = true, desc = 'Close Current Buffer' })
 
+  -- Open Oil
+  vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+
   -- Diagnostic Config & Keymaps
   --  See `:help vim.diagnostic.Opts`
   vim.diagnostic.config {
@@ -1156,6 +1159,15 @@ do
   require('nvim-surround').setup {
     -- Configuration here, or leave empty to use defaults
   }
+end
+
+-- ============================================================
+-- SECTION: OIL
+-- oil.nvim file explorer (uses mini.icons, set up above)
+-- ============================================================
+do
+  vim.pack.add { gh 'stevearc/oil.nvim' }
+  require('oil').setup {}
 end
 
 -- ============================================================
