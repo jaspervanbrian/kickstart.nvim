@@ -171,7 +171,7 @@ vim.o.confirm = true
 
 -- Function to toggle relative number
 local toggle_relative_number = function()
-  vim.o.relativenumber = not (vim.o.relativenumber:get())
+  vim.o.relativenumber = not vim.o.relativenumber
 end
 
 -- [[ Basic Keymaps ]]
