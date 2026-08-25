@@ -955,8 +955,9 @@ do
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
     -- You can add other tools here that you want Mason to install
-    'ripgrep',
-    'fd',
+    -- NOTE: ripgrep and fd are not in the Mason registry — install them
+    -- with your system package manager instead (e.g. `brew install ripgrep fd`)
+    'prettierd',
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -981,9 +982,15 @@ do
       local enabled_filetypes = {
         -- lua = true,
         -- python = true,
+        javascript = true,
+        javascriptreact = true,
+        typescript = true,
+        typescriptreact = true,
+        json = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
-        return { timeout_ms = 500 }
+        -- prettierd's daemon can take >500ms on its first (cold) run
+        return { timeout_ms = 2000 }
       else
         return nil
       end
