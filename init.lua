@@ -844,7 +844,25 @@ do
   ---@type table<string, vim.lsp.Config>
   local servers = {
     -- clangd = {},
-    -- gopls = {},
+    gopls = {
+      settings = {
+        gopls = {
+          gofumpt = true,
+          staticcheck = true,
+          analyses = {
+            unusedparams = true,
+          },
+          hints = {
+            assignVariableTypes = true,
+            compositeLiteralFields = true,
+            constantValues = true,
+            functionTypeParameters = true,
+            parameterNames = true,
+            rangeVariableTypes = true,
+          },
+        },
+      },
+    },
     pyright = {},
     -- tsc = {},
     --
@@ -854,6 +872,7 @@ do
     -- But for many setups, the LSP (`rust_analyzer`) will work just fine
     -- rust_analyzer = {},
 
+    expert = {},
     ruby_lsp = {},
     vtsls = {
       -- explicitly add default filetypes, so that we can extend
@@ -958,6 +977,8 @@ do
     -- NOTE: ripgrep and fd are not in the Mason registry — install them
     -- with your system package manager instead (e.g. `brew install ripgrep fd`)
     'prettierd',
+    'goimports',
+    'gofumpt',
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -987,6 +1008,11 @@ do
         typescript = true,
         typescriptreact = true,
         json = true,
+        go = true,
+        ruby = true,
+        elixir = true,
+        eelixir = true,
+        heex = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         -- prettierd's daemon can take >500ms on its first (cold) run
@@ -1005,6 +1031,7 @@ do
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       json = { 'prettierd', 'prettier', stop_after_first = true },
+      go = { 'goimports', 'gofumpt' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
