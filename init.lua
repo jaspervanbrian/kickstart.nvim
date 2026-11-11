@@ -130,6 +130,11 @@ do
   -- Enable break indent
   vim.o.breakindent = true
 
+  -- Set default tab width to 4 spaces (industry standard for Go and tab-indented languages;
+  -- guess-indent.nvim will still auto-detect 2-space indentation for Ruby, Elixir, JS/TS, Lua, etc.)
+  vim.o.tabstop = 4
+  vim.o.shiftwidth = 4
+
   -- Enable undo/redo changes even after closing and reopening a file
   vim.o.undofile = true
 
